@@ -11,7 +11,7 @@ export default defineNuxtConfig({
    build: {
     transpile: ['@element-plus/nuxt']
    },
-   modules: ['@element-plus/nuxt', "@nuxtjs/google-fonts"],
+   modules: ['@element-plus/nuxt', "@nuxtjs/google-fonts", '@vueuse/nuxt'],
    elementPlus: { /** Options */ },
    googleFonts:{
     families:{
