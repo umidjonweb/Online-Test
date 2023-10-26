@@ -2,13 +2,12 @@
   "name": "nuxt-app",
   "private": true,
   "scripts": {
-    "cypress:open": "cypress open",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "format": "prettier --write pages/ layouts/ components/",
+    "format": "prettier --write pages/ layouts/ components/"
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.5",
