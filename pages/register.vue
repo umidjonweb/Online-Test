@@ -54,8 +54,6 @@ const submitForm = () => {
     }
   })
 }
-
-
 </script>
 <template>
   <NuxtLayout name="auth" class="login flex justify-center items-center h-screen">
