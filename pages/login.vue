@@ -85,6 +85,7 @@ function parseJwt (token: string) {
           </el-form-item>
           <el-form-item label="Parol" prop="password">
             <el-input
+            show-password
               class="border rounded-lg overflow-hidden text-green-800"
               v-model.trim="_form.password"
               placeholder="Maydonni to'ldiring"

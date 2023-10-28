@@ -109,10 +109,9 @@ watch(()=> startTimer(+new Date(_testItems.value?.endTime)))
         @click="nextTest(ind + 1)"
         class="flex justify-center items-center w-8 h-7 border border-white cursor-pointer bg-[#9edcc2] text-white"
         :class="{
-          '!bg-green-dark': (route.query?.id == ind+1 || !route.query?.id && !ind || count.selected),
-          '!bg-danger': (timer =='0' & !(count.forms.find((el)=> el.correct == 'true')?.id == count?.selected))
-          }" 
-        >
+          'bg-green-dark': (route.query?.id == ind+1 || !route.query?.id && !ind || count.selected),
+          '!bg-danger': (timer =='0' &  !(count.forms.find((el)=> el.correct == 'true')?.id == count?.selected))
+          }">
         {{ ind + 1 }}
       </div>
     </div>

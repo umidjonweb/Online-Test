@@ -29,7 +29,7 @@ const form = ref({
     <div class="flex justify-end items-end my-6">
         <el-button   @click="dialogFormVisible = true"  type="primary">Fan qo'shish</el-button>
     </div>
-      <el-dialog v-model="dialogFormVisible" title="Fanni qo'shing">
+      <el-dialog v-if="dialogFormVisible"  v-model="dialogFormVisible" title="Fanni qo'shing">
         <el-form label-position="top" :model="form">
           <el-form-item label="Fanni nomini kiriting" >
             <el-input class="!w-full"  v-model="form.name"  />

@@ -99,7 +99,7 @@
     </el-table-column>
     <el-table-column fixed="right" label="Status" width="220">
          <template #default='scope'>
-          <el-button link type="primary" size="small" @click="userVerify(scope.row.id)">Tasdiqlah</el-button>
+          <el-button link type="primary" size="small" @click="userVerify(scope.row.id)">Tasdiqlash</el-button>
         <el-button link type="danger" size="small" @click="userBlock(scope.row.id)">Rad etish</el-button>
       </template>
     </el-table-column>

@@ -2,15 +2,28 @@
 import type { FormInstance, FormRules } from 'element-plus'
 import { register_API } from '@/services/auth'
 
+
 const router = useRouter()
 const formRef = ref<FormInstance>()
 const _form = ref({
     username: '',
     password:'',
+    confirm_password: '',
     email:'',
     firstName:'',
     lastName:''
 })
+const validatePass2 = (rule: any, value: any, callback: any) => {
+   console.log('val', value);
+   
+  if (!value) {
+    callback(new Error("Inputni to'ldiring"))
+  } else if (value !== _form.value.password) {
+    callback(new Error("Parol xato kiritildi"))
+  } else {
+    callback()
+  }
+}
 
 const rules = reactive<FormRules<any>>({
   email: [{required: true, message: "Inputni to'ldiring", trigger: 'blur' }],
@@ -18,8 +31,9 @@ const rules = reactive<FormRules<any>>({
   firstName: [{required: true, message: "Inputni to'ldirish", trigger: 'blur' }],
   lastName: [{required: true, message: "Inputni to'ldirish", trigger: 'blur' }],
   username: [{required: true, message: "Inputni to'ldirish", trigger: 'blur' }],
-
+  confirm_password: [{ validator: validatePass2, trigger: 'blur' }],
 })
+
 
 const submitForm = () => {
   if (!formRef.value) return
@@ -45,7 +59,7 @@ const submitForm = () => {
 </script>
 <template>
   <NuxtLayout name="auth" class="login flex justify-center items-center h-screen">
-        <div class="w-[780px] overflow-hidden flex h-3/4 border border-gray rounded-xl">
+        <div class="w-[780px] overflow-hidden flex h-5/6 border border-gray rounded-xl">
             <div class="bg-green w-1/2 flex justify-center items-center">
                 <img class="w-3/4"  src="@/assets/img/logos.png" alt="">
             </div>
@@ -66,11 +80,12 @@ const submitForm = () => {
                     <el-form-item label="email" prop="email">
                   <el-input class="border rounded-lg overflow-hidden text-green-800" v-model.trim="_form.email" placeholder="Emailni kiriting"/>
                 </el-form-item>
-                    <el-form-item label="Parol" prop="password">
+                <el-form-item label="Parol" prop="password">
                   <el-input type="password" show-password class="border rounded-lg overflow-hidden text-green-800" v-model.trim="_form.password" placeholder="Parolni kiriting"/>
                 </el-form-item>
-                 
-                
+                  <el-form-item label="Parolni takrorlang" prop="confirm_password">
+                  <el-input type="confirm_password" show-password class="border rounded-lg overflow-hidden text-green-800" v-model.trim="_form.confirm_password" placeholder="Parolni kiriting"/>
+                </el-form-item>
                 <el-form-item>
                    <el-button native-type="submit" class="!h-12 !rounded-lg !w-full !bg-green-800 !text-white mt-3">Registatsiyadan o'tish</el-button>
                  </el-form-item>

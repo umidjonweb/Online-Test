@@ -1,3 +1,59 @@
+<script lang="ts" setup>
+import { Check, Close } from '@element-plus/icons-vue'
+import {
+  getTestLists_API,
+  postTestCreate_API,
+  startTest_API,
+  _testItems,
+  _startTestId,
+} from "@/services/tests";
+import { getSubjectLists_API, postSubject_API } from "@/services/subjects";
+import { formatDate_UTIL } from "@/utils";
+import { _loginStore } from "~/services/auth";
+
+const router = useRouter();
+const _items = ref([]);
+const _optionSubject = ref([]);
+
+const dialogFormVisible = ref(false);
+const form = ref({
+  name: "",
+  totalQuestion: 0,
+  totalTime: 0,
+  subjectId: "",
+  tryCount: 0,
+  certified: null,
+  certifiedPercentage: 0
+});
+async function handleTest(item) {
+  const [response, error] = await startTest_API(item.id);
+  if (error) return;
+  _startTestId.value = response;
+  console.log("_startTestId.value ", _startTestId.value);
+
+  router.push("/tests/" + _startTestId.value);
+}
+async function testCreate() {
+  const [response, error] = await postTestCreate_API(form.value);
+  dialogFormVisible.value = false;
+  if (error) return;
+  getTestLists();
+}
+async function getSubjects() {
+  const [response, error] = await getSubjectLists_API();
+  if (error) console.log("redsdssdsdsd", response);
+  _optionSubject.value = response?.content;
+}
+
+async function getTestLists() {
+  const [response, error] = await getTestLists_API();
+  _items.value = response;
+}
+
+getSubjects();
+getTestLists();
+</script>
+
 <template>
   <NuxtLayout>
     <div>
@@ -9,7 +65,7 @@
           >Test qo'shish</el-button
         >
       </div>
-      <el-dialog v-model="dialogFormVisible" title="Testni qo'shing">
+      <el-dialog v-if="dialogFormVisible" v-model="dialogFormVisible" title="Testni qo'shing">
         <el-form label-position="top" :model="form">
           <el-form-item label="Testni nomini kiriting">
             <el-input class="!w-full" v-model="form.name" />
@@ -113,58 +169,3 @@
   </NuxtLayout>
 </template>
 
-<script lang="ts" setup>
-import { Check, Close } from '@element-plus/icons-vue'
-import {
-  getTestLists_API,
-  postTestCreate_API,
-  startTest_API,
-  _testItems,
-  _startTestId,
-} from "@/services/tests";
-import { getSubjectLists_API, postSubject_API } from "@/services/subjects";
-import { formatDate_UTIL } from "@/utils";
-import { _loginStore } from "~/services/auth";
-
-const router = useRouter();
-const _items = ref([]);
-const _optionSubject = ref([]);
-
-const dialogFormVisible = ref(false);
-const form = ref({
-  name: "",
-  totalQuestion: 0,
-  totalTime: 0,
-  subjectId: "",
-  tryCount: 0,
-  certified: null,
-  certifiedPercentage: 0
-});
-async function handleTest(item) {
-  const [response, error] = await startTest_API(item.id);
-  if (error) return;
-  _startTestId.value = response;
-  console.log("_startTestId.value ", _startTestId.value);
-
-  router.push("/tests/" + _startTestId.value);
-}
-async function testCreate() {
-  const [response, error] = await postTestCreate_API(form.value);
-  dialogFormVisible.value = false;
-  if (error) return;
-  getTestLists();
-}
-async function getSubjects() {
-  const [response, error] = await getSubjectLists_API();
-  if (error) console.log("redsdssdsdsd", response);
-  _optionSubject.value = response?.content;
-}
-
-async function getTestLists() {
-  const [response, error] = await getTestLists_API();
-  _items.value = response;
-}
-
-getSubjects();
-getTestLists();
-</script>
